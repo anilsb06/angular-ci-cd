@@ -1,3 +1,12 @@
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay
+  PROJECT_PATH: "$CI_PROJECT_DIR"
+  APP_OUTPUT_PATH: "$CI_PROJECT_DIR/dist"
+  APP_NODE_MODULES: "node_modules"
+
 stages:
   - dependencies
   - test
@@ -12,5 +21,53 @@ install_dependencies:
   only:
     - master
   cache:
+    key: $APP_NODE_MODULES
     paths:
       - node_modules
+
+lint:
+  image: node:12-alpine
+  stage: test
+  script:
+    - npm link @angular/cli@11.2.6
+    - ng lint
+  cache:
+    key: $APP_NODE_MODULES
+    policy: pull
+
+test:
+  image: markhobson/node-chrome:latest
+  stage: test
+  script:
+    - npm link @angular/cli@11.2.6
+    - npm test
+  cache:
+    key: $APP_NODE_MODULES
+    policy: pull
+
+build_image:
+  image: node:12-alpine
+  stage: build
+  script:
+    - npm link @angular/cli@11.2.6
+    - npm run build
+  artifacts:
+    paths:
+      - $APP_OUTPUT_PATH
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
+
+push-docker-registry:
+  image: docker:latest
+  stage: publish
+  only:
+    - master
+  script:
+    - docker build -t registry.gitlab.com/chikaslocalhost/angular-gitlab-ci-cd .
+    - docker login -u chikaslocalhost -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker push registry.gitlab.com/chikaslocalhost/angular-gitlab-ci-cd
