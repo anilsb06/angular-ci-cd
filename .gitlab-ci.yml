@@ -12,9 +12,5 @@ install_dependencies:
   only:
     - master
   cache:
-    key:
-      files:
-        - package-lock.json
     paths:
       - node_modules
-    policy: pull-push
