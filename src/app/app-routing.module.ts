@@ -5,6 +5,7 @@ import {AdminViewComponent} from './admin-view/admin-view.component';
 import {UserViewComponent} from './user-view/user-view.component';
 import {PermissionDeniedComponent} from './permission-denied/permission-denied.component';
 
+
 const routes: Routes = [
   {
     path: '',
