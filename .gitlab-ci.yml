@@ -11,9 +11,3 @@ install_dependencies:
     - npm install
   only:
     - master
-  cache:
-    key:
-      files:
-        - package-lock.json
-    paths:
-      - node_modules
