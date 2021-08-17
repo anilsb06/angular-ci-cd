@@ -62,3 +62,13 @@ build_image:
     paths:
       - node_modules
     policy: pull
+
+push-docker-registry:
+  image: docker:latest
+  stage: publish
+  only:
+    - master
+  script:
+    - docker build -t registry.gitlab.com/chikaslocalhost/angular-gitlab-ci-cd .
+    - docker login -u chikaslocalhost -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker push registry.gitlab.com/chikaslocalhost/angular-gitlab-ci-cd
