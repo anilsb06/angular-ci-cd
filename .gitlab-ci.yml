@@ -1,5 +1,5 @@
-variables:
-  DOCKER_DRIVER: overlay
+services:
+  - docker:dind
 
 stages:
   - dependencies
