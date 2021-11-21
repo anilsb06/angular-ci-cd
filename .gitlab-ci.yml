@@ -82,6 +82,6 @@ push-docker-registry:
   only:
     - master
   script:
-    - docker build -t registry.gitlab.com/chikaslocalhost/angular-ci-cd .
+    - docker build -t javatodev/angular-ci-cd-app .
     - docker login -u javatodev -p $DOCKER_HUB_BUILD_TOKEN
     - docker push javatodev/angular-ci-cd-app
