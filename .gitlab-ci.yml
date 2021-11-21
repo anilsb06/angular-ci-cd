@@ -66,7 +66,7 @@ build_image:
       - node_modules
     policy: pull
 
-push-docker-registry:
+push-gitlab-docker-registry:
   image: docker:latest
   stage: publish
   only:
@@ -75,3 +75,13 @@ push-docker-registry:
     - docker build -t registry.gitlab.com/chikaslocalhost/angular-ci-cd .
     - docker login -u chikaslocalhost -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker push registry.gitlab.com/chikaslocalhost/angular-ci-cd
+
+push-docker-registry:
+  image: docker:latest
+  stage: publish
+  only:
+    - master
+  script:
+    - docker build -t registry.gitlab.com/chikaslocalhost/angular-ci-cd .
+    - docker login -u javatodev -p $DOCKER_HUB_BUILD_TOKEN
+    - docker push javatodev/angular-ci-cd-app
