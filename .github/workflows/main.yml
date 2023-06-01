@@ -1,15 +1,19 @@
 name: Angular CI
 
 on:
-  workflow_dispatch:
-  push:
+  workflow_run:
+    workflows:
+      - "Angular CI"
     branches:
-      - master
       - dev
-  pull_request:
-    branches:
-      - master
-      - dev
+  #push:
+    #branches:
+      #- master
+      #- dev
+  #pull_request:
+    #branches:
+      #- master
+      #- dev
 
 jobs:
   build:
