@@ -1,7 +1,6 @@
-name: Manual trigger
-
+name: Angular CI
 on:
-  workflow_dispatch:
+  workflow_dispatch
   
   #push:
     #branches:
