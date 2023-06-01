@@ -1,10 +1,7 @@
 name: Angular CI
 
 on:
-  workflow_run:
-    workflows: [Angular CI]
-    types: [requested]
-    branches: [dev]
+  workflow_dispatch:
 
   #push:
     #branches:
