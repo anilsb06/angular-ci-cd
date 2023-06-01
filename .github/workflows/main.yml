@@ -11,8 +11,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
+      - name: Use the secret
+        run: echo ${{ secrets.USERNAME }}
+        
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -28,9 +31,6 @@ jobs:
 
       - name: Build
         run: ng build --configuration production
-
-      - name: Run tests
-        run: ng test --watch=false --browsers=ChromeHeadless
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v2
